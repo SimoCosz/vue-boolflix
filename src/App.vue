@@ -12,7 +12,7 @@
           <h3 class="title">{{movie.title}}</h3>
           <h4 class="original-title">{{movie.original_title}}</h4>
           <figure>
-            <img :src="`./assets/img/${require(movie.original_language)}.png`" alt="">
+            <img :src="require(`./assets/img/${movie.original_language}.png`)" alt="">
           </figure>
           <p class="vote">{{movie.vote_average}}</p>
         </div>
@@ -24,7 +24,9 @@
         <div class="card-movie" v-for="serie in series" :key="serie.id">
           <h3 class="title">{{serie.name}}</h3>
           <h4 class="original-title">{{serie.original_name}}</h4>
-          <p class="language">{{serie.original_language}}</p>
+          <figure>
+            <img :src="require(`./assets/img/${serie.original_language}.png`)" alt="">
+          </figure>
           <p class="vote">{{serie.vote_average}}</p>
         </div>
       </div>
@@ -114,6 +116,10 @@ export default {
     border: 1px solid black;
     width: calc((100% / 6) - 10px);
     padding: 10px;
+
+    figure{
+      width: 20px;
+    }
   }
 
 }
