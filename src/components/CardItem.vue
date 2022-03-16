@@ -6,7 +6,12 @@
     <h3 class="title">{{element.title}}</h3>
     <p class="original-title">{{element.original_title}}</p>
     <p>{{getFlag(element.original_language)}}</p>
-    <p class="vote">{{element.vote_average}}</p>
+    <div class="star-wrapper">
+      <p class="vote" :class="i<stars(element) ?  'star' : '' " v-for="(el, i) in 5" :key="i">
+        <span v-if="i<stars(element)" >&starf;</span>
+        <span v-else>&star;</span>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -25,6 +30,10 @@ export default {
 
   methods: {
 
+    stars: function (element){
+      return Math.ceil((element.vote_average / 2))
+    },
+    
     getFlag: function(unicode){
       if (unicode == 'en'){
         unicode = 'gb';
@@ -49,5 +58,14 @@ export default {
     .flag{
       width: 20px;
     }
+
+    .star-wrapper{
+      display: flex;
+    
+      .star{
+        color: orange;
+      }
+    }
+
   }
 </style>
