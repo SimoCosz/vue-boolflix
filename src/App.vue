@@ -6,17 +6,15 @@
       <button @click="getMovie(), getSeries()">Search</button>
       
       <h2>Movies</h2>
-      <div class="info-movie">
-
-        <div class="card-movie" v-for="movie in movies" :key="movie.id">
-          <h3 class="title">{{movie.title}}</h3>
-          <p class="original-title">{{movie.original_title}}</p>
-          <p>{{getFlag(movie.original_language)}}</p>
-          <p class="vote">{{movie.vote_average}}</p>
-        </div>
+      <div class="movie-wrapper">
+        <CardItem v-for="movie in movies" :key="movie.id" :element='movie' />
+      </div>
+      <h2>Series</h2>
+      <div class="movie-wrapper">
+        <CardItem v-for="serie in series" :key="serie.id" :element='serie' />
       </div>
 
-      <h2>Series</h2>
+      <!-- <h2>Series</h2>
       <div class="info-movie">
 
         <div class="card-movie" v-for="serie in series" :key="serie.id">
@@ -25,7 +23,7 @@
           <p>{{getFlag(serie.original_language)}}</p>
           <p class="vote">{{serie.vote_average}}</p>
         </div>
-      </div>
+      </div> -->
 
     </div>
   </div>
@@ -33,14 +31,12 @@
 
 <script>
 import axios from 'axios';
-import getUnicodeFlagIcon from 'country-flag-icons/unicode';
-import { hasFlag } from 'country-flag-icons'
-
+import CardItem from './components/CardItem.vue'
 
 export default {
   name: 'App',
   components: {
-
+    CardItem,
   },
   
   data() {
@@ -67,16 +63,7 @@ export default {
   },
 
   methods: {
-    getFlag: function(unicode){
-      if (unicode == 'en'){
-        unicode = 'gb';
-      }
-      if (hasFlag(unicode.toUpperCase())) {
-        return getUnicodeFlagIcon(unicode);
-      } else {
-        return unicode
-      }
-    },
+    
 
     getMovie: function(){
       axios.get(`${this.baseURL}movie`,{
@@ -84,14 +71,14 @@ export default {
         api_key: '9857cfb37fc41b760e69c70f6d75b517',
         query: this.search,
       }
-    })
-    .then(res => {
-      console.log(res.data)
-      this.movies = res.data.results
-    })
-    .catch(error => {
-      console.log(error.response)
-    })
+      })
+      .then(res => {
+        console.log(res.data)
+        this.movies = res.data.results
+      })
+      .catch(error => {
+        console.log(error.response)
+      })
     },
 
     getSeries: function(){
@@ -108,6 +95,7 @@ export default {
       .catch(error => {
         console.log(error.response)
       })
+      this.search= ''
     }
   }
 }
@@ -130,21 +118,10 @@ export default {
   }
 }
 
-.info-movie{
+.movie-wrapper{
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   margin: 20px 0;
-
-  .card-movie{
-    border: 1px solid white;
-    width: calc((100% / 5) - 10px);
-    padding: 10px;
-
-    .flag{
-      width: 20px;
-    }
-  }
-
 }
 </style>
