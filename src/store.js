@@ -4,6 +4,7 @@ import axios from 'axios'
 const state = Vue.observable({
   search: '',
   movies: [],
+  series: [],
   baseURI: 'https://api.themoviedb.org/3/search/',
 })
 
@@ -37,5 +38,5 @@ export function getMovie(){
   .catch(error => {
     console.log(error.response)
   })
-  state.search= ''
+  // state.search= ''
 }

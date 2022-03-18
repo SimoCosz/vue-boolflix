@@ -2,18 +2,14 @@
   <div id="app">
       <header>
         <NavComponent />
-        <h2>{{search}}</h2>
       </header>
-    <div class="container">
-      
-      <h2>Movies</h2>
+    <div class="container-fluid">
       <div class="movie-wrapper">
         <CardItem v-for="movie in movies" :key="movie.id" :element='movie' />
       </div>
-      <!-- <h2>Series</h2>
       <div class="movie-wrapper">
         <CardItem v-for="serie in series" :key="serie.id" :element='serie' />
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
@@ -30,16 +26,13 @@ export default {
     CardItem,
     NavComponent,
   },
-  
-  data() {
-    return {
-      
-    }
-  },
 
   computed: {
     movies: function(){
       return state.movies
+    },
+    series: function(){
+      return state.series
     },
     search: function() {
       return state.search
@@ -60,16 +53,28 @@ export default {
   background-color: #141414;
   min-height: 100vh;
 
+  header{
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+  }
 
   .container{
     color: white;
+
+    .category{
+      width: 100%;
+      margin-bottom: 20px;
+    }
   }
 }
 
 .movie-wrapper{
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
-  gap: 10px;
-  margin: 20px 0;
+  gap: 5px;
+  margin: 40px 0;
+  padding: 20px;
 }
 </style>
